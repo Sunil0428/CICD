@@ -10,7 +10,7 @@ pipeline{
         stage('login into mysql ec2'){
             steps{
                 script{
-                    writeFile file: 'ec2-key.pem', text: $PRIVATE_KEY
+                    writeFile file: 'ec2-key.pem', text: PRIVATE_KEY
                     sudo sh 'chmod 600 ec2-key.pem'
                     sh '''
                         ssh -i ec2-key.pem -o StrictHostKeyChecking=no ec2-user@$mysql_host <<EOF
