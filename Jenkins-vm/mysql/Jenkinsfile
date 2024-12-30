@@ -11,7 +11,7 @@ pipeline{
                 script{
                     sshagent(['mysql-key']) { // Replace with the ID of your SSH credentials
                         sh '''
-                            ssh -o StrictHostKeyChecking=no ec2-user@$mysql_host <<EOF
+                            ssh -i jenkinskey ec2-user@$mysql_host 
                             echo "Successfully logged in to EC2 instance"
                         '''
                     }
