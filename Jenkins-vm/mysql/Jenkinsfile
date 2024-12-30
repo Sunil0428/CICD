@@ -12,7 +12,7 @@ pipeline{
                 sshagent(['mysql-key'])
                   sh """
                         ssh -o StrictHostKeyChecking=no ec2-user@$mysql_host <<EOF
-                        echo "Successfully logged in to EC2 instance"
+                        echo "Successfully logged in to mysql instance"
                     """
             }
         }
