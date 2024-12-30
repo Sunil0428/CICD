@@ -1,0 +1,20 @@
+pipeline{
+    agent{
+        label 'Agent-1'
+    }
+    environment {
+        mysql_host = 'mysql.mydevops.tech' // Replace with your EC2 public DNS or IP
+        MYSQL_PRIVATE_KEY = credentials('my-ssh-key-id')
+    }
+    stages{
+        stage('login into mysql ec2'){
+            steps{
+                sshagent(['mysql-key'])
+                  sh """
+                        ssh -o StrictHostKeyChecking=no ec2-user@$mysql_host <<EOF
+                        echo "Successfully logged in to EC2 instance"
+                    """
+            }
+        }
+    }
+}
