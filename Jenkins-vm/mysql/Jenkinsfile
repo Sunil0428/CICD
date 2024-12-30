@@ -4,7 +4,6 @@ pipeline{
     }
     environment {
         mysql_host = 'mysql.mydevops.tech' // Replace with your EC2 public DNS or IP
-        MYSQL_PRIVATE_KEY = credentials('my-ssh-key-id')
     }
     stages{
         stage('login into mysql ec2'){
