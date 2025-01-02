@@ -15,8 +15,9 @@ pipeline {
                         sh '''
                         sshpass -p "$EC2_PASS" ssh -o StrictHostKeyChecking=no "$EC2_USER@$EC2_IP" 
                         echo "Connection Successful to EC2 Instance!"
-                        sudo dnf install mysql -y
-                       
+                        sudo dnf install mysql-server -y
+                        sudo systemctl enable mysqld
+                        sudo mysql_secure_installation --set-root-pass ExpenseApp@1
                         '''
                     }
                 }
