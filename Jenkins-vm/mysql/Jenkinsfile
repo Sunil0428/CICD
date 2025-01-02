@@ -1,23 +1,22 @@
-pipeline{
-    agent{
+pipeline {
+    agent {
         label 'Agent-1'
     }
+
     environment {
-        mysql_host = 'mysql.mydevops.tech' // Replace with your EC2 public DNS or IP
+        EC2_HOST = "mysql.mydevops.tech" // Replace with your EC2 instance public IP
     }
-    stages{
-        stage('login into mysql ec2'){
-            steps{
-                script{
-                    sshagent(['mysql-key']) { // Replace with the ID of your SSH credentials
-                        sh '''
-                            ssh -i jenkinskey ec2-user@$mysql_host 
-                            echo "Successfully logged in to EC2 instance"
-                        '''
-                    }
+
+    stages {
+        stage('Connect to EC2') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'ssh-auth', user: 'ec2-user', pass: 'DevOps321')]) {
+                    sh '''
+                    sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$EC2_HOST 
+                    echo "Connected successfully!"
+                    '''
                 }
             }
         }
-     
     }
 }
