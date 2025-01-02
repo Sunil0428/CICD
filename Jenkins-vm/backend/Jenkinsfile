@@ -19,7 +19,7 @@ pipeline {
                         curl -fsSL https://rpm.nodesource.com/setup_20.x | bash -
                         sudo yum install -y nodejs
                         sudo dnf install nodejs -y
-                        sudo mkdir /app
+                        sudo mkdir -p /app
                         sudo curl -o /tmp/backend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip
                         sudo cd /app
                         sudo unzip /tmp/backend.zip
