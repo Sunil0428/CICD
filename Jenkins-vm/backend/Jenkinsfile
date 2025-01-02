@@ -22,6 +22,7 @@ pipeline {
                         sudo rm -rf /app
                         sudo rm -rf /tmp
                         sudo mkdir -p /app
+                        sudo mkdir -p /tmp
                         sudo curl -o /tmp/backend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip
                         sudo cd /app
                         sudo unzip /tmp/backend.zip
