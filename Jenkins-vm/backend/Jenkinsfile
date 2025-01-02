@@ -16,7 +16,7 @@ pipeline {
                         sshpass -p "$EC2_PASS" ssh -o StrictHostKeyChecking=no "$EC2_USER@$EC2_IP" 
                         echo "Connection Successful to EC2 Instance!"
                         sudo dnf module disable nodejs -y
-                        sudo module enable nodejs:20 -y
+                         module enable nodejs:20 -y
                         sudo dnf install nodejs -y
                         sudo useradd expense
                         sudo mkdir /app
