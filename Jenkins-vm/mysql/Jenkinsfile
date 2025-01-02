@@ -1,20 +1,23 @@
 pipeline {
-    agent {
+    agent{
         label 'Agent-1'
     }
 
     environment {
-        EC2_HOST = "mysql.mydevops.tech" // Replace with your EC2 instance public IP
+        EC2_IP = 'mysql.mydevops.tech' // Replace with the public/private IP of your third EC2 instance
     }
 
     stages {
         stage('Connect to EC2') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'ssh-auth', user: 'ec2-user', pass: 'DevOps321')]) {
-                    sh '''
-                    sshpass -p $pass ssh -o StrictHostKeyChecking=no $user@$EC2_HOST 
-                    echo "Connected successfully!"
-                    '''
+                withCredentials([usernamePassword(credentialsId: 'ssh-auth', usernameVariable: 'EC2_USER', passwordVariable: 'EC2_PASS')]) {
+                    script {
+                        // Use sshpass to connect to the EC2 instance and execute a simple command
+                        sh '''
+                        sshpass -p $EC2_PASS ssh -o StrictHostKeyChecking=no $EC2_USER@$EC2_IP 
+                        "echo 'Connection Successful to EC2 Instance!'"
+                        '''
+                    }
                 }
             }
         }
