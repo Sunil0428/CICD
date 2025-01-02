@@ -14,7 +14,8 @@ pipeline {
                     script {
                         sh '''
                         # Copy the backend.service file to the EC2 instance
-                        sshpass -p "$EC2_PASS" scp -o StrictHostKeyChecking=no /d/devops/mylearning/CICD/backend/backend.service "$EC2_USER@$EC2_IP:/tmp/backend.service"
+                        sshpass -p "$EC2_PASS" scp -o StrictHostKeyChecking=no /d/devops/mylearning/CICD/Jenkins-vm/backend/backend.service
+                        "$EC2_USER@$EC2_IP:/tmp/backend.service"
 
                         # SSH into the EC2 instance and execute commands
                         sshpass -p "$EC2_PASS" ssh -o StrictHostKeyChecking=no "$EC2_USER@$EC2_IP" << EOF
