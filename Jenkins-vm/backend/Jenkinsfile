@@ -8,24 +8,12 @@ pipeline {
     }
 
     stages {
-        stage('copy backend.service'){
-            steps{
-                withCredentials([usernamePassword(credentialsId: 'ssh-auth', usernameVariable: 'EC2_USER', passwordVariable: 'EC2_PASS')]) {
-                    script {
-                        sh '''
-                        # Copy the backend.service file to the EC2 instance
-                       sshpass -p "$EC2_PASS" scp -o StrictHostKeyChecking=no /home/ec2-user/jenkins/backend.service  "$EC2_USER@$EC2_IP:/tmp/backend.service" << EOF
-                       EOF
-                       '''
-                      }
-                 }
-            }
-        }
         stage('Connect and Configure EC2') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'ssh-auth', usernameVariable: 'EC2_USER', passwordVariable: 'EC2_PASS')]) {
                     script {
                         sh '''
+                            sshpass -p "$EC2_PASS" scp -o StrictHostKeyChecking=no /home/****/jenkins/backend.service "$EC2_USER@$EC2_IP:/tmp/backend.service" << EOF
                             sshpass -p "$EC2_PASS" ssh -o StrictHostKeyChecking=no "$EC2_USER@$EC2_IP" << EOF
                             echo "Connection Successful to EC2 Instance!"
                             sudo dnf module disable nodejs -y
