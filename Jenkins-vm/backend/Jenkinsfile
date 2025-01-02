@@ -13,7 +13,7 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'ssh-auth', usernameVariable: 'EC2_USER', passwordVariable: 'EC2_PASS')]) {
                     script {
                         sh '''
-                            sshpass -p "$EC2_PASS" scp -o StrictHostKeyChecking=no /home/****/jenkins/backend.service "$EC2_USER@$EC2_IP:/tmp/backend.service" << EOF
+                            sshpass -p "$EC2_PASS" scp -o StrictHostKeyChecking=no /home/ec2-user/jenkins/backend.service "$EC2_USER@$EC2_IP:/tmp/backend.service" << EOF
                             EOF
                             '''
                         sh'''
