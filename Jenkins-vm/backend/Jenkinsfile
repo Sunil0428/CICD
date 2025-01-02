@@ -14,9 +14,9 @@ pipeline {
                     script {
                         // SCP command to copy the file from Jenkins agent to EC2
                         sh '''
-                            sshpass -p "$EC2_PASS" scp -o StrictHostKeyChecking=no /home/ec2-user/jenkins/backend.service "$EC2_USER@$EC2_IP:/tmp/backend.service"
-                        '''
-                        
+                          echo "Copying file to EC2..."
+                          sshpass -p "$EC2_PASS" scp -o StrictHostKeyChecking=no /home/ec2-user/jenkins/backend.service "$EC2_USER@$EC2_IP:/tmp/backend.service"
+                         '''                      
                         // SSH to EC2 and run commands remotely
                         sh '''
                             sshpass -p "$EC2_PASS" ssh -o StrictHostKeyChecking=no "$EC2_USER@$EC2_IP" <<EOF
