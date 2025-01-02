@@ -4,7 +4,7 @@ pipeline {
     }
 
     environment {
-        EC2_IP = '3.95.174.253' // Replace with your EC2 instance's public/private IP
+        EC2_IP = 'mysql.mydevops.tech' // Replace with your EC2 instance's public/private IP
     }
 
     stages {
