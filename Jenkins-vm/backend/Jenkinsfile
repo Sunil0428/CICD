@@ -16,8 +16,7 @@ pipeline {
                         # Copy the backend.service file to the EC2 instance
                        sshpass -p "$EC2_PASS" scp -o StrictHostKeyChecking=no /home/ec2-user/jenkins/backend.service  "$EC2_USER@$EC2_IP:/tmp/backend.service"<< EOF
                        
-                        # SSH into the EC2 instance and execute commands
-                        sshpass -p "$EC2_PASS" ssh -o StrictHostKeyChecking=no "$EC2_USER@$EC2_IP" << EOF
+                      
                             echo "Connection Successful to EC2 Instance!"
                             sudo dnf module disable nodejs -y
                             curl -fsSL https://rpm.nodesource.com/setup_20.x | bash -
