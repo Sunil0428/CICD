@@ -31,7 +31,10 @@ pipeline{
         }
         stage('Install dependencies'){
             steps{
-                sh 'npm install'
+                sh '''
+                cd expense-backend
+                npm install
+                '''
             }
         }
         stage('Docker build'){
