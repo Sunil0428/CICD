@@ -41,18 +41,19 @@ pipeline{
             steps {
                 sh 'whoami'
                 sh 'groups'
+                sh echo "appversion: ${appVersion}"
             }
         }
         stage('Docker build'){
             steps{
                 withAWS(region: 'us-east-1', credentials: 'aws-creds'){
-                sh '''
+                sh """
                 echo "appversion: ${appVersion}"
                 aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${account_id}.dkr.ecr.us-east-1.amazonaws.com
                 docker build -t expense-dev/backend expense-backend/.
                 docker tag expense-dev/backend:${appVersion} 423623871433.dkr.ecr.us-east-1.amazonaws.com/expense-dev/backend
                 docker push 423623871433.dkr.ecr.us-east-1.amazonaws.com/expense-dev/backend:${appVersion}
-                '''
+                """
                 }
             }
         }
