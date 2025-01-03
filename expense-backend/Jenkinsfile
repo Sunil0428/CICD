@@ -22,7 +22,7 @@ pipeline{
         stage('Read the version'){
             steps{
                script{
-                  def packageJson = readJSON file: 'package.json'
+                  def packageJson = readJSON file: 'expense-backend/package.json'
                   appVersion=packageJson.version
                   license=packageJson.license
                   echo "appverion: ${appVersion}"
