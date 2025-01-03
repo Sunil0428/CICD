@@ -1,0 +1,51 @@
+pipeline{
+    agent{
+        label 'Agent-1'
+    }
+    options{
+        timeout(time:30, unit:'SECONDS')
+        disableConcurrentBuilds()
+    }
+    parameters{
+        booleanParam(name: 'deploy', defaultValue: false, description: 'Select to deploy or not')
+    }
+    environment {
+        appVersion = '' // this will become global, we can use across pipeline
+        license=''
+        region = 'us-east-1'
+        account_id = '423623871433'
+        project = 'expense'
+        environment = 'dev'
+        component = 'backend'
+    }
+    stages{
+        stage('Read the version'){
+            steps{
+               script{
+                  def packageJson = readJSON file: 'package.json'
+                  appVersion=packageJson.version
+                  license=packageJson.license
+                  echo "appverion: ${appVersion}"
+               }
+            }
+        }
+        stage('Install dependencies'){
+            steps{
+                sh 'npm install'
+            }
+        }
+        stage('Docker build'){
+            steps{
+                withAWS(region: 'us-east-1', credentials: 'aws-creds'{
+                sh '''
+                aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${account_id}.dkr.ecr.us-east-1.amazonaws.com
+                docker build -t ${project}-${environment}/${component}:${appVersion} .
+                docker tag ${project}-${environment}/${component}:${appVersion} ${account_id}.dkr.ecr.us-east-1.amazonaws.com/${project}-${environment}/${component}:${appVersion}
+                docker push ${account_id}.dkr.ecr.us-east-1.amazonaws.com/${project}-${environment}/${component}:${appVersion}
+
+                '''
+                }
+            }
+        }
+    }
+}
