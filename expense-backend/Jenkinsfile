@@ -41,7 +41,7 @@ pipeline{
             steps {
                 sh 'whoami'
                 sh 'groups'
-                sh "echo appversion: ${appVersion}"
+                sh 'echo appversion: ${appVersion}'
             }
         }
         stage('Docker build'){
