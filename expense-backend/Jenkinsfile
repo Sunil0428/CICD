@@ -37,6 +37,12 @@ pipeline{
                 '''
             }
         }
+         stage('Debug User') {
+            steps {
+                sh 'whoami'
+                sh 'groups'
+            }
+        }
         stage('Docker build'){
             steps{
                 withAWS(region: 'us-east-1', credentials: 'aws-creds'){
